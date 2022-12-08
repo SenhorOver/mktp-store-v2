@@ -5,14 +5,12 @@ import {
   CardContent, 
   CardMedia, 
   Container, 
-  createTheme, 
   Grid, 
   Typography 
 } from '@mui/material'
 
 import TemplateDefault from '../../src/templates/Default'
-
-const theme = createTheme()
+import theme from '../../src/theme'
 
 export default function Home() {
   return (
