@@ -1,5 +1,17 @@
 import { DeleteForever } from '@mui/icons-material'
-import { Box, Container, Select, TextField, Typography, Button, IconButton } from '@mui/material'
+import {
+    Box,
+    Container,
+    Select,
+    TextField,
+    Typography,
+    Button,
+    IconButton,
+    FormControl,
+    InputLabel,
+    OutlinedInput,
+    InputAdornment
+} from '@mui/material'
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -44,6 +56,7 @@ const Publish = () => {
     return (
         <Root>
             <TemplateDefault>
+                {/* Page Title */}
                 <Container maxWidth="sm" sx={{ padding: theme.spacing(8, 0, 6) }}>
                     <Typography component={'h1'} variant='h2' align='center' color={'textPrimary'}>
                         Publicar Anúncio
@@ -53,6 +66,7 @@ const Publish = () => {
                     </Typography>
                 </Container>
 
+                {/* Item Name / Category */}
                 <Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
                     <Box sx={{ 
                         backgroundColor: theme.palette.background.white, 
@@ -99,6 +113,8 @@ const Publish = () => {
                         </Select>
                     </Box>
                 </Container>
+
+                {/* Images */}
                 <Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
                     <Box sx={{ 
                         backgroundColor: theme.palette.background.white, 
@@ -179,6 +195,8 @@ const Publish = () => {
                         </Box>                
                     </Box>
                 </Container>
+
+                {/* Description */}
                 <Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
                     <Box sx={{ 
                         backgroundColor: theme.palette.background.white, 
@@ -198,6 +216,29 @@ const Publish = () => {
                         />
                     </Box>
                 </Container>
+
+                {/* Price */}
+                <Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
+                    <Box sx={{ 
+                        backgroundColor: theme.palette.background.white, 
+                        padding: theme.spacing(3) }}
+                    >  
+                        <Typography component='h6' variant='h6' color={'textPrimary'}>
+                            Preço
+                        </Typography>
+                        <br />
+                        <FormControl fullWidth variant='outlined'>
+                            <InputLabel sx={{ backgroundColor: 'white' }}>Valor</InputLabel>
+                            <OutlinedInput
+                                onChange={() => {}}
+                                startAdornment={<InputAdornment position='start'>R$</InputAdornment>}
+                                labelWidth={40}
+                            />
+                        </FormControl>
+                    </Box>
+                </Container>
+
+                {/* Contact Data */}
                 <Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
                     <Box sx={{ 
                         backgroundColor: theme.palette.background.white, 
@@ -228,6 +269,8 @@ const Publish = () => {
                         />
                     </Box>
                 </Container>
+
+                {/* Publish Button */}
                 <Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
                     <Box textAlign='right'>
                         <Button variant='contained' color='primary'>
