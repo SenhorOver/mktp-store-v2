@@ -10,12 +10,11 @@ import {
 } from '@mui/material'
 
 import TemplateDefault from '../../src/templates/Default'
-import theme from '../../src/theme'
 
 export default function Home() {
   return (
     <TemplateDefault>
-      <Container maxWidth="sm" sx={{ padding: theme.spacing(8, 0 ,6) }}>
+      <Container maxWidth="sm">
         <Typography component='h1' variant='h2' align='center'>
           Meus Anúncios
         </Typography>

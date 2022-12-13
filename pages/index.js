@@ -16,7 +16,7 @@ import theme from "../src/theme"
 const Home = () => {
     return (
         <TemplateDefault>
-            <Container disableGutters maxWidth='md' sx={{ padding: theme.spacing(8, 10, 6) }}>
+            <Container disableGutters maxWidth='md'>
                 <Typography component='h1' variant="h3" align="center" color='textPrimary'>
                     O que deseja encontrar?
                 </Typography>

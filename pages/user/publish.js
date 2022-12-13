@@ -57,7 +57,7 @@ const Publish = () => {
         <Root>
             <TemplateDefault>
                 {/* Page Title */}
-                <Container maxWidth="sm" sx={{ padding: theme.spacing(8, 0, 6) }}>
+                <Container maxWidth="sm">
                     <Typography component={'h1'} variant='h2' align='center' color={'textPrimary'}>
                         Publicar Anúncio
                     </Typography>
