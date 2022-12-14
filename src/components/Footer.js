@@ -7,7 +7,7 @@ const Footer = () => {
     return (
         <Container maxWidth='lg' component={'footer'} 
             sx={{
-                borderTop: `1px solid ${theme.divader}`,
+                borderTop: `1px solid ${theme.palette.divider}`,
                 paddingTop: theme.spacing(3),
                 paddingBottom: theme.spacing(3),
 
