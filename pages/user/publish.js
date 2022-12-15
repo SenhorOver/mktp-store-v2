@@ -69,6 +69,17 @@ const Publish = () => {
         description: yup.string()
         .min(50, 'Escreva uma descrição com pelo menos 50 caracteres')
         .required('Campo obrigatório'),
+
+        price: yup.number()
+            .required('Campo Obrigatório'),
+
+        email: yup.string()
+            .email('Digite um e-mail válido')
+            .required('Campo Obrigatório'),
+
+        name: yup.string().required('Campo Obrigatório'),
+
+        phone: yup.number().required('Campo Obrigatório')
     })
 
     return (
@@ -90,6 +101,10 @@ const Publish = () => {
                         title: '',
                         category: '',
                         description: '',
+                        price: '',
+                        email: '',
+                        name: '',
+                        phone: '',
                     }}
                     validationSchema={validateSchema}
                     onSubmit={(values) => {
@@ -275,17 +290,22 @@ const Publish = () => {
                                             backgroundColor: theme.palette.background.white, 
                                             padding: theme.spacing(3) }}
                                         >  
-                                            <Typography component='h6' variant='h6' color={'textPrimary'}>
-                                                Preço
-                                            </Typography>
+
                                             <br />
-                                            <FormControl fullWidth variant='outlined'>
-                                                <InputLabel sx={{ backgroundColor: 'white' }}>Valor</InputLabel>
-                                                <OutlinedInput
-                                                    onChange={() => {}}
+                                            <FormControl error={errors.price} fullWidth variant='outlined'>
+                                                <InputLabel sx={{ backgroundColor: 'white', left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+                                                    Preço de Venda
+                                                </InputLabel>
+                                                <Input
+                                                    name='price'
+                                                    value={values.price}
+                                                    onChange={handleChange}
                                                     startAdornment={<InputAdornment position='start'>R$</InputAdornment>}
                                                     labelwidth={40}
                                                 />
+                                                <FormHelperText sx={{ marginLeft: 0 }}>
+                                                    {errors.price}
+                                                </FormHelperText>
                                             </FormControl>
                                         </Box>
                                     </Container>
@@ -298,27 +318,55 @@ const Publish = () => {
                                         >
                                             <Typography component='h6' variant='h6' color={'textPrimary'} gutterBottom>
                                                 Dados de Contato
-                                            </Typography>    
-                                            <TextField
-                                                label='Nome'
-                                                variant='outlined'
-                                                size='small'
-                                                fullWidth 
-                                            />
-                                            <br /><br />                              
-                                            <TextField
-                                                label='E-mail'
-                                                variant='outlined'
-                                                size='small'
-                                                fullWidth 
-                                            />
-                                            <br /><br />
-                                            <TextField
-                                                label='Telefone'
-                                                variant='outlined'
-                                                size='small'
-                                                fullWidth 
-                                            />
+                                            </Typography>  
+                                            <FormControl error={errors.name} fullWidth>
+                                                <InputLabel sx={{ left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+                                                    Nome
+                                                </InputLabel>
+                                                <Input
+                                                    variant='standard'
+                                                    name='name'
+                                                    value={values.name}
+                                                    onChange={handleChange}
+                                                />
+                                                <FormHelperText sx={{ marginLeft: 0 }}>
+                                                    {errors.name}
+                                                </FormHelperText>
+                                            </FormControl> 
+
+                                            <br /><br />  
+
+                                            <FormControl error={errors.email} fullWidth>
+                                                <InputLabel sx={{ left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+                                                    Email
+                                                </InputLabel>
+                                                <Input
+                                                    variant='standard'
+                                                    name='email'
+                                                    value={values.email}
+                                                    onChange={handleChange}
+                                                />
+                                                <FormHelperText sx={{ marginLeft: 0 }}>
+                                                    {errors.email}
+                                                </FormHelperText>
+                                            </FormControl>  
+
+                                            <br /><br />  
+
+                                            <FormControl error={errors.phone} fullWidth>
+                                                <InputLabel sx={{ left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+                                                    Telefone
+                                                </InputLabel>
+                                                <Input
+                                                    variant='standard'
+                                                    name='phone'
+                                                    value={values.phone}
+                                                    onChange={handleChange}
+                                                />
+                                                <FormHelperText sx={{ marginLeft: 0 }}>
+                                                    {errors.phone}
+                                                </FormHelperText>
+                                            </FormControl> 
                                         </Box>
                                     </Container>
 
