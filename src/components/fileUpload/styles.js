@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 
-const PREFIX = 'Publish';
+const PREFIX = 'FileUpload';
 export const classes = {
   imgHover: `${PREFIX}-imgHover`,
   imgMask: `${PREFIX}-imgMask`,
