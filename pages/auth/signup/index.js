@@ -21,6 +21,7 @@ import { initialValues, validationSchema } from "./formValues"
 const Signup = () => {
 	const { setToasty } = useToasty()
 	const router = useRouter()
+	
 	const handleFormSubmit = async (values) => {
 		const response = await axios.post('/api/users', values)
 
