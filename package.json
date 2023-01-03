@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.17",
     "@next/font": "^13.0.6",
+    "axios": "^1.2.2",
     "bcrypt": "^5.1.0",
     "formik": "^2.2.9",
     "mongoose": "^6.8.1",
