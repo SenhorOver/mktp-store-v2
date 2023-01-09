@@ -19,6 +19,7 @@ import TemplateDefault from "../../../src/templates/Default"
 import theme from "../../../src/theme"
 import useToasty from "../../../src/contexts/Toasty";
 import { initialValues, validationSchema } from "./formValues"
+import Image from "next/image";
 
 const Signin = () => {
 	const { setToasty } = useToasty()
@@ -26,6 +27,12 @@ const Signin = () => {
 	const { data: session, status } = useSession()
 
 	console.log(session)
+
+	const handleGoogleLogin = () => {
+		signIn('google', {
+			callbackUrl: 'http://localhost:3000/user/dashboard'
+		})
+	}
 	
 	const handleFormSubmit = async (values) => {
 		const response = await signIn('credentials', {
@@ -48,6 +55,35 @@ const Signin = () => {
 
 			<Container maxWidth='md'>
 				<Box sx={{ padding: theme.spacing(3), backgroundColor: theme.palette.background.white }}>
+					
+					<Box display={'flex'} justifyContent='center'>
+					<Button 
+						variant="contained"
+						color="primary"
+						startIcon={
+							<Image 
+								src="/images/google-icon.svg"
+								width={20}
+								height={20}
+								alt="Login com Google"
+							/>
+						}
+						onClick={handleGoogleLogin}
+					>
+						Entrar com Google
+					</Button>
+					</Box>
+					
+					<Box sx={{ 
+						display: 'flex', 
+						justifyContent: 'center', 
+						alignItems: 'center', 
+						backgroundColor: '#e8e8e8', 
+						width: '100%', height: '1px', 
+						margin: theme.spacing(7,0,4) }}>
+						<span style={{ backgroundColor: 'white', padding: '0 30px' }}>ou</span>
+					</Box>
+
 					<Formik
 						initialValues={initialValues}
 						validationSchema={validationSchema}
