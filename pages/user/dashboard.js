@@ -8,7 +8,7 @@ import {
 import TemplateDefault from '../../src/templates/Default'
 import Card from '../../src/components/Card'
 
-export default function Home() {
+const Home = () => {
   return (
     <TemplateDefault>
       <Container maxWidth="sm">
@@ -77,3 +77,7 @@ export default function Home() {
     </TemplateDefault>
   )
 }
+
+Home.requireAuth = true
+
+export default Home

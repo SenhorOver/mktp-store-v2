@@ -27,7 +27,7 @@ const Signin = ({ APP_URL }) => {
 	const { data: session, status } = useSession()
 
 	console.log(session)
-
+	
 	const handleGoogleLogin = () => {
 		signIn('google', {
 			callbackUrl: `${APP_URL}/user/dashboard`
@@ -161,9 +161,11 @@ const Signin = ({ APP_URL }) => {
 	)
 }
 
-Signin.getServerSideProps = async function (){
+export async function getServerSideProps(){
 	return {
-		APP_URL: process.env.APP_URL
+		props: {
+			APP_URL: process.env.APP_URL
+		}
 	}
 }
 
