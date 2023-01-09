@@ -18,7 +18,7 @@ export const authOptions = {
       
       async authorize(credentials) {
         return axios
-          .post('http://localhost:3000/api/auth/signin', {
+          .post(`${process.env.APP_URL}/api/auth/signin`, {
             email: credentials.email,
             password: credentials.password,
           })

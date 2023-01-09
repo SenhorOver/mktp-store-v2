@@ -21,7 +21,7 @@ import useToasty from "../../../src/contexts/Toasty";
 import { initialValues, validationSchema } from "./formValues"
 import Image from "next/image";
 
-const Signin = () => {
+const Signin = ({ APP_URL }) => {
 	const { setToasty } = useToasty()
 	const router = useRouter()
 	const { data: session, status } = useSession()
@@ -30,7 +30,7 @@ const Signin = () => {
 
 	const handleGoogleLogin = () => {
 		signIn('google', {
-			callbackUrl: 'http://localhost:3000/user/dashboard'
+			callbackUrl: `${APP_URL}/user/dashboard`
 		})
 	}
 	
@@ -159,6 +159,12 @@ const Signin = () => {
 			</Container>
 		</TemplateDefault>
 	)
+}
+
+Signin.getServerSideProps = async function (){
+	return {
+		APP_URL: process.env.APP_URL
+	}
 }
 
 export default Signin
