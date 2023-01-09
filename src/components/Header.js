@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSession, signOut } from 'next-auth/react'
 import {
   AppBar, 
   Box, 
@@ -20,7 +21,10 @@ import { AccountCircle } from '@mui/icons-material';
 
 export default function ButtonAppBar() {
   const [anchorUserMenu, setAnchorUserMenu] = React.useState(false)
-  
+  const { data: session } = useSession()
+
+  console.log(session)
+
   const openUserMenu = Boolean(anchorUserMenu)
 
   return (
@@ -33,21 +37,27 @@ export default function ButtonAppBar() {
               Mktp Store
             </Typography>
           </Link>
-          <Link href='/user/publish' className={style.headerBtnLink}>
-            <Button color="inherit" variant='outlined'>
+          <Link href={session ? '/user/publish' : '/auth/signin'} className={style.headerBtnLink}>
+            <Button color="inherit" variant='outlined' sx={{ marginRight: '10px' }}>
               Anunciar e Vender
             </Button>
           </Link>
-          <IconButton color='secondary' onClick={(e) => setAnchorUserMenu(e.currentTarget)}>
-            {
-              true === false
-              ? <Avatar src='' />
-              : <AccountCircle />
-            }
-            <Typography variant='subtitle2' color='secondary' sx={{ marginLeft: '6px' }}>
-              Marcos Silva
-            </Typography>
-          </IconButton>
+          {
+            session
+              ? (
+                <IconButton color='secondary' onClick={(e) => setAnchorUserMenu(e.currentTarget)}>
+                  {
+                    session.user.image
+                    ? <Avatar src={session.user.image} />
+                    : <AccountCircle />
+                  }
+                  <Typography variant='subtitle2' color='secondary' sx={{ marginLeft: '8px' }}>
+                    {session.user.name}
+                  </Typography>
+                </IconButton>
+              )
+              : null
+          }
 
           <Menu
             open={openUserMenu}
@@ -65,7 +75,9 @@ export default function ButtonAppBar() {
               <MenuItem>Publicar novo anúncio</MenuItem>
             </Link>
             <Divider sx={{ margin: '8px 0' }} />
-            <MenuItem>Sair</MenuItem>
+            <MenuItem onClick={() => signOut({
+              callbackUrl: '/'
+            })}>Sair</MenuItem>
           </Menu>
         </Toolbar>      
         </Container>
