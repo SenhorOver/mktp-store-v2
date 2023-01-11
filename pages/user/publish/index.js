@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react'
 import {
 	Box,
 	Container,
@@ -9,17 +11,70 @@ import {
 	InputAdornment,
 	MenuItem,
 	FormHelperText,
-	Input
+	Input,
+	CircularProgress
 } from '@mui/material'
 import { Formik } from 'formik';
+import axios from 'axios';
 
 import TemplateDefault from '../../../src/templates/Default'
 import theme from '../../../src/theme'
 import { initialValues, validateSchema } from './formValues';
 import FileUpload from '../../../src/components/fileUpload';
+import useToasty from '../../../src/contexts/Toasty'
 
 
-const Publish = () => {
+const Publish = ({ userId, image }) => {
+	const { setToasty } = useToasty()
+	const router = useRouter()
+
+	const formValues = {
+		...initialValues,
+	}
+
+	formValues.userId = userId
+	formValues.image = image
+
+	const handleSuccess = () => {
+		console.log('alou')
+		setToasty({
+			open: true,
+			text: 'Anúncio cadastrado com sucesso',
+			severity: 'success',
+		})
+
+		router.push('/user/dashboard')
+	}
+
+	const handleError = () => {
+		console.log('alou')
+		setToasty({
+			open: true,
+			text: 'Ops, ocorreu um erro, tente novamente',
+			severity: 'error',
+		})
+	}
+
+	const handleformSubmit = (values) => {
+		const formData = new FormData()
+		
+		for(let field in values){
+			if(field === 'files'){
+				values.files.forEach(file => {
+					formData.append('files', file)
+				})
+			} else {
+				formData.append(field, values[field])
+			}
+		}
+
+		
+		
+		axios.post('/api/products', formData)
+			.then(handleSuccess)
+			.catch(handleError)
+	}
+
 	return (
 		<TemplateDefault>
 			{/* Page Title */}
@@ -34,11 +89,9 @@ const Publish = () => {
 
 			<br /><br />
 			<Formik
-				initialValues={initialValues}
+				initialValues={formValues}
 				validationSchema={validateSchema}
-				onSubmit={(values) => {
-					console.log('enviou o form', values)
-				}}
+				onSubmit={handleformSubmit}
 			>
 				{
 					({
@@ -48,9 +101,13 @@ const Publish = () => {
 						handleChange,
 						handleSubmit,
 						setFieldValue,
+						isSubmitting,
 					}) => {
 						return (
 							<form onSubmit={handleSubmit}>
+								<Input type='hidden' name="userId" value={values.userId} />
+								<Input type='hidden' name="image" value={values.image} />
+
 								{/* Item Name / Category */}
 								<Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
 									<Box sx={{
@@ -241,9 +298,15 @@ const Publish = () => {
 								{/* Publish Button */}
 								<Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
 									<Box textAlign='right'>
-										<Button type='submit' variant='contained' color='primary'>
-											Publicar Anúncio
-										</Button>
+										{
+											isSubmitting
+												? <CircularProgress sx={{ display: 'block', margin: '10px auto' }} />
+												: (
+													<Button type='submit' variant='contained' color='primary'>
+														Publicar Anúncio
+													</Button>
+												)
+										}
 									</Box>
 								</Container>
 							</form>
@@ -256,7 +319,18 @@ const Publish = () => {
 	)
 }
 
-
 Publish.requireAuth = true
+
+export async function getServerSideProps({ req }){
+	const { userId, user } = await getSession({ req })
+
+	return {
+		props: {
+			userId,
+			image: user.image
+		}
+	}
+}
+
 
 export default Publish

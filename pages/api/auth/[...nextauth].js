@@ -41,6 +41,21 @@ export const authOptions = {
     secret: process.env.JWT_TOKEN,
   },
 
+  callbacks: {
+    async jwt ({token, user}) {
+      if(user){
+        token.uid = user.id
+      }
+
+      return Promise.resolve(token)
+    },
+
+    async session({session, token}) {
+      session.userId = token.uid
+      return session
+    }
+  },
+
   adapter: MongoDBAdapter(clientPromise),
 }
 export default NextAuth(authOptions)

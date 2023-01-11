@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react'
 import {
   AppBar, 
@@ -20,10 +20,10 @@ import style from '../../styles/situational.module.css'
 import { AccountCircle } from '@mui/icons-material';
 
 export default function ButtonAppBar() {
-  const [anchorUserMenu, setAnchorUserMenu] = React.useState(false)
+  const [anchorUserMenu, setAnchorUserMenu] = useState(false)
   const { data: session } = useSession()
 
-  console.log(session)
+  // console.log(session)
 
   const openUserMenu = Boolean(anchorUserMenu)
 
