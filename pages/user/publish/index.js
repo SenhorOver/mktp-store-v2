@@ -50,7 +50,7 @@ const Publish = ({ userId, image }) => {
 		console.log('alou')
 		setToasty({
 			open: true,
-			text: 'Ops, ocorreu um erro, tente novamente',
+			text: 'Ops, ocorreu um erro, atualize a página e tente novamente',
 			severity: 'error',
 		})
 	}
@@ -70,7 +70,7 @@ const Publish = ({ userId, image }) => {
 
 		
 		
-		axios.post('/api/products', formData)
+		axios.post('/api/products/add', formData)
 			.then(handleSuccess)
 			.catch(handleError)
 	}

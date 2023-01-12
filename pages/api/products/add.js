@@ -1,5 +1,5 @@
 import nextConnect from 'next-connect'
-import { post } from '../../src/controllers/products'
+import { post } from '../../../src/controllers/products'
 
 export const config = {
   api: {

@@ -30,9 +30,9 @@ const post = async (req, res) => {
 
       const filename = `${timestamp}_${random}${extension}`
 
-      const oldpath = path.join(__dirname, `../../../../${file.path}`)
-      const newpath = path.join(__dirname, `../../../../${form.uploadDir}/${filename}`)
-      
+      const oldpath = path.join(__dirname, `../../../../../${file.path}`)
+      const newpath = path.join(__dirname, `../../../../../${form.uploadDir}/${filename}`)
+
       filesToSave.push({
         name: filename,
         path: newpath
@@ -41,7 +41,7 @@ const post = async (req, res) => {
       fs.rename(oldpath, newpath, (error) => {
         if(error){
           console.log(error)
-          return res.status(500).json({ success: false })
+          return res.status(500).json({ success: false, path: 'error' })
         }
       })
     })
@@ -84,6 +84,23 @@ const post = async (req, res) => {
   })
 }
 
+const remove = async (req, res) => {
+  await dbConnect()
+  console.log(req.body)
+  
+  const { id } = req.body
+
+  const deleted = await ProductsModel.findOneAndDelete({ _id: id })
+  if(deleted){
+    return res.status(200).json({ success: true })
+  } else {
+    return res.status(500).json({ success: false })
+  }
+
+}
+
+
 export {
-  post
+  post,
+  remove
 }
