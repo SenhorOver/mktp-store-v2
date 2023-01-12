@@ -59,7 +59,7 @@ const Home = ({ products }) => {
     setToasty({
       open: true,
       severity: 'error',
-      text: 'Ops, ocorreu um erro!'
+      text: 'Ops, ocorreu um erro, atualize a página e tente novamente!'
     })
   }
 

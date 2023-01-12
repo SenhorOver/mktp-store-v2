@@ -11,10 +11,14 @@ import {
 } from "@mui/material"
 import Carousel from "react-material-ui-carousel"
 
-import TemplateDefault from "../../src/templates/Default"
-import theme from "../../src/theme"
+import ProductsModel from "../../../src/models/products"
+import TemplateDefault from "../../../src/templates/Default"
+import theme from "../../../src/theme"
+import { formatCurrency } from "../../../src/utils/currency"
+import dbConnect from "../../../src/utils/dbConnect"
+import { formatDate } from "../../../src/utils/date"
 
-const Product = () => {
+const Product = ({ product }) => {
     return (
         <TemplateDefault>
             <Container maxWidth='lg'>
@@ -29,36 +33,33 @@ const Product = () => {
                                         color: 'white'
                                     }
                                 }}
-                                animation='slide'
+                                animation='fade'
                             >
-                                <Card sx={{ height: '100%' }}>
-                                    <CardMedia 
-                                        image="https://source.unsplash.com/random?a=1"
-                                        title='Titulo da Imagem'
-                                        sx={{ paddingTop: '56%' }}
-                                    />
-                                </Card>
-                                <Card sx={{ height: '100%' }}>
-                                        <CardMedia 
-                                            image="https://source.unsplash.com/random?a=2"
-                                            title='Titulo da Imagem'
-                                            sx={{ paddingTop: '56%' }}
-                                        />
-                                </Card>
+                                {
+                                    product.files.map(file => (
+                                        <Card key={file.name} sx={{ height: '100%' }}>
+                                            <CardMedia 
+                                                image={`/uploads/${file.name}`}
+                                                title={file.title}
+                                                sx={{ paddingTop: '56%' }}
+                                            />
+                                        </Card>
+                                    ))
+                                }
                             </Carousel>
                         </Box>
 
                         <Box sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
                             <Typography component='span' variant='caption'>
-                                Publicado 16 junho de 2021
+                                Publicado {formatDate(product.criadoEm)}
                             </Typography>
                             <Typography component='h4' variant='h4' sx={{ margin: '15px 0' }}>
-                                Jaguar XE 2.0 D R-Sport Aut.
+                                {product.title}
                             </Typography>
                             <Typography component='h4' variant='h4' sx={{ fontWeight: 'bold', marginBottom: '15px' }}>
-                                R$ 50.000,00
+                                {formatCurrency(product.price)}
                             </Typography>
-                            <Chip label='Categoria' />
+                            <Chip label={product.category} />
                         </Box>
 
                         <Box sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
@@ -66,23 +67,28 @@ const Product = () => {
                                 Descrição
                             </Typography>
                             <Typography component={'p'} variant='body2'>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                {product.description}
                             </Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={4}>
                         <Card elevation={0} sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
                             <CardHeader 
-                                avatar={<Avatar>M</Avatar>}
-                                title='Marcos Silva'
-                                subheader='marcos@email.com'
+                                avatar={
+                                <Avatar src={product.user.image}>
+                                    {product.user.image || product.user.name[0]}
+                                </Avatar>
+                            }
+                                title={product.user.name}
+                                subheader={product.user.email}
                             />
                             <CardMedia 
-                                image='https://source.unsplash.com/random'
-                                title='Marcos Silva'
+                                image={product.user.image}
+                                title={product.user.name}
                             />
                         </Card>
 
+                        {/* Colocar a localização do usuário */}
                         <Box sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
                             <Typography component='h6' variant='h6'>
                                 Localização
@@ -93,6 +99,19 @@ const Product = () => {
             </Container>
         </TemplateDefault>
     )
+}
+
+export async function getServerSideProps({ query }){
+    const { id } = query
+    await dbConnect()
+    
+    const product = await ProductsModel.findOne({ _id: id })
+
+    return {
+        props: {
+            product: JSON.parse(JSON.stringify(product))
+        }
+    }
 }
 
 export default Product

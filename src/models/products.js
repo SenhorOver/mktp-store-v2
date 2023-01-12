@@ -6,7 +6,11 @@ const filesSchema = new mongoose.Schema({
 })
 
 const schema = new mongoose.Schema({
-    title: {
+  criadoEm: {
+    type: Date,
+    default: Date.now,
+  },
+  title: {
         type: String,
         required: [true, 'O campo "título do anúncio" é obrigatório.']
     },

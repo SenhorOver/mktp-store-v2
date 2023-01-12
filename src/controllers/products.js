@@ -86,7 +86,6 @@ const post = async (req, res) => {
 
 const remove = async (req, res) => {
   await dbConnect()
-  console.log(req.body)
   
   const { id } = req.body
 
