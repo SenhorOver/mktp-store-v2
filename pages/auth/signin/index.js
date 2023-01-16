@@ -169,4 +169,6 @@ export async function getServerSideProps(){
 	}
 }
 
+Signin.requireGuest = true
+
 export default Signin

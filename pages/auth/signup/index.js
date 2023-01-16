@@ -142,4 +142,6 @@ const Signup = () => {
 	)
 }
 
+Signup.requireGuest = true
+
 export default Signup

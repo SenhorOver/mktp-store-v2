@@ -7,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 
 import CheckAuth from '../src/components/CheckAuth';
+import CheckGuest from '../src/components/CheckGuest'
 import theme from '../src/theme';
 import { ToastyProvider } from '../src/contexts/Toasty';
 import createEmotionCache from '../src/createEmotionCache';
@@ -30,7 +31,9 @@ export default function MyApp(props) {
             {
               Component.requireAuth
                 ? <CheckAuth Component={Component} pageProps={pageProps} />
-                : <Component {...pageProps} />
+                : Component.requireGuest
+                  ? <CheckGuest Component={Component} pageProps={pageProps} />
+                  : <Component {...pageProps} />
             }
           </ToastyProvider>
         </ThemeProvider>
