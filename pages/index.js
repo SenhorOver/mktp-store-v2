@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { useRouter } from 'next/router'
+import { useState } from "react"
 import slugify from "slugify"
 import {
     IconButton,
@@ -18,6 +20,13 @@ import ProductsModel from '../src/models/products'
 import { formatCurrency } from '../src/utils/currency'
 
 const Home = ({ products }) => {
+    const router = useRouter()
+    const [search, setSearch] = useState()
+
+    const handleSearch = () => {
+        router.push(`/search/${search}`)
+    }
+
     return (
         <TemplateDefault>
             <Container disableGutters maxWidth='md'>
@@ -28,8 +37,10 @@ const Home = ({ products }) => {
                     <InputBase
                         placeholder="Ex.: iPhone 12 com garantia"
                         fullWidth
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                     />
-                    <IconButton>
+                    <IconButton onClick={handleSearch}>
                         <Search />
                     </IconButton>
                 </Paper>
