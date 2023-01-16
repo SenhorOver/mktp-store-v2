@@ -16,15 +16,13 @@ import {
 } from "@mui/material"
 
 import TemplateDefault from "../../../src/templates/Default"
-import theme from "../../../src/theme"
-import useToasty from "../../../src/contexts/Toasty";
 import { initialValues, validationSchema } from "./formValues"
 import Image from "next/image";
+import styles from "./styles";
 
 const Signin = ({ APP_URL }) => {
-	const { setToasty } = useToasty()
 	const router = useRouter()
-	const { data: session, status } = useSession()
+	const { data: session } = useSession()
 
 	console.log(session)
 	
@@ -47,14 +45,14 @@ const Signin = ({ APP_URL }) => {
 
 	return (
 		<TemplateDefault>
-			<Container maxWidth='sm' component='main' sx={{ paddingBottom: '30px' }}>
+			<Container maxWidth='sm' component='main' sx={styles.typoSpacing}>
 				<Typography component='h1' variant='h2' align="center" color='textPrimary'>
 					Entre na sua conta
 				</Typography>
 			</Container>
 
 			<Container maxWidth='md'>
-				<Box sx={{ padding: theme.spacing(3), backgroundColor: theme.palette.background.white }}>
+				<Box sx={styles.box}>
 					
 					<Box display={'flex'} justifyContent='center'>
 					<Button 
@@ -74,14 +72,8 @@ const Signin = ({ APP_URL }) => {
 					</Button>
 					</Box>
 					
-					<Box sx={{ 
-						display: 'flex', 
-						justifyContent: 'center', 
-						alignItems: 'center', 
-						backgroundColor: '#e8e8e8', 
-						width: '100%', height: '1px', 
-						margin: theme.spacing(7,0,4) }}>
-						<span style={{ backgroundColor: 'white', padding: '0 30px' }}>ou</span>
+					<Box sx={styles.googleBtn}>
+						<span style={styles.separatorText}>ou</span>
 					</Box>
 
 					<Formik
@@ -103,13 +95,13 @@ const Signin = ({ APP_URL }) => {
 										{
 											router.query.i === '1'
 												? (
-													<Alert severity='error' sx={{marginBottom: '20px'}}>
+													<Alert severity='error' sx={styles.errorSpacing}>
 														Usuário ou senha inválidos
 													</Alert>
 												)
 												: null
 										}
-										<FormControl fullWidth error={errors.email && touched.email} sx={{ marginBottom: theme.spacing(2) }} >
+										<FormControl fullWidth error={errors.email && touched.email} sx={styles.formSpacing} >
 											<InputLabel sx={{ left: '-14px' }}>Email</InputLabel>
 											<Input
 												name='email'
@@ -122,7 +114,7 @@ const Signin = ({ APP_URL }) => {
 											</FormHelperText>
 										</FormControl>
 
-										<FormControl fullWidth error={errors.password && touched.password} sx={{ marginBottom: theme.spacing(2) }} >
+										<FormControl fullWidth error={errors.password && touched.password} sx={styles.formSpacing} >
 											<InputLabel sx={{ left: '-14px' }}>Senha</InputLabel>
 											<Input
 												name='password'
@@ -137,14 +129,14 @@ const Signin = ({ APP_URL }) => {
 										{
 											isSubmitting 
 												? (
-													<CircularProgress sx={{ display: 'block', margin: '10px auto'}} />
+													<CircularProgress sx={styles.circularProgress} />
 												) : (
 													<Button
 														type='submit'
 														fullWidth
 														variant='contained'
 														color='primary'
-														sx={{ margin: theme.spacing(3, 0, 2) }}
+														sx={styles.submitBtn}
 													>
 														Entrar
 													</Button>

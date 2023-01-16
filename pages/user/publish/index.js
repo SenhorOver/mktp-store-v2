@@ -18,10 +18,10 @@ import { Formik } from 'formik';
 import axios from 'axios';
 
 import TemplateDefault from '../../../src/templates/Default'
-import theme from '../../../src/theme'
 import { initialValues, validateSchema } from './formValues';
 import FileUpload from '../../../src/components/fileUpload';
 import useToasty from '../../../src/contexts/Toasty'
+import styles from './styles';
 
 
 const Publish = ({ userId, image }) => {
@@ -109,14 +109,11 @@ const Publish = ({ userId, image }) => {
 								<Input type='hidden' name="image" value={values.image} />
 
 								{/* Item Name / Category */}
-								<Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
-									<Box sx={{
-										backgroundColor: theme.palette.background.white,
-										padding: theme.spacing(3)
-									}}
+								<Container maxWidth='md' sx={styles.container}>
+									<Box sx={styles.divSpacing}
 									>
 										<FormControl error={errors.title && touched.title} fullWidth>
-											<InputLabel sx={{ left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+											<InputLabel sx={styles.iptLabel}>
 												Título do Anúncio
 											</InputLabel>
 											<Input
@@ -125,7 +122,7 @@ const Publish = ({ userId, image }) => {
 												value={values.title}
 												onChange={handleChange}
 											/>
-											<FormHelperText sx={{ marginLeft: 0 }}>
+											<FormHelperText sx={styles.helperText}>
 												{errors.title && touched.title ? errors.title : null}
 											</FormHelperText>
 										</FormControl>
@@ -133,7 +130,7 @@ const Publish = ({ userId, image }) => {
 										<br /><br />
 
 										<FormControl error={errors.category && touched.category} fullWidth>
-											<InputLabel sx={{ left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+											<InputLabel sx={styles.iptLabel}>
 												Categoria
 											</InputLabel>
 											<Select
@@ -158,7 +155,7 @@ const Publish = ({ userId, image }) => {
 												<MenuItem value={'Emprego'}>Emprego</MenuItem>
 												<MenuItem value={'Outros'}>Outros</MenuItem>
 											</Select>
-											<FormHelperText sx={{ marginLeft: 0 }}>
+											<FormHelperText sx={styles.helperText}>
 												{errors.category && touched.category ? errors.category : null}
 											</FormHelperText>
 										</FormControl>
@@ -166,11 +163,8 @@ const Publish = ({ userId, image }) => {
 								</Container>
 
 								{/* Images */}
-								<Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
-									<Box sx={{
-										backgroundColor: theme.palette.background.white,
-										padding: theme.spacing(3)
-									}}
+								<Container maxWidth='md' sx={styles.container}>
+									<Box sx={styles.divSpacing}
 									>
 										<FileUpload
 											files={values.files}
@@ -182,14 +176,11 @@ const Publish = ({ userId, image }) => {
 								</Container>
 
 								{/* Description */}
-								<Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
-									<Box sx={{
-										backgroundColor: theme.palette.background.white,
-										padding: theme.spacing(3)
-									}}
+								<Container maxWidth='md' sx={styles.container}>
+									<Box sx={styles.box}
 									>
 										<FormControl error={errors.description && touched.description} fullWidth>
-											<InputLabel sx={{ left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+											<InputLabel sx={styles.iptLabel}>
 												Escreva os detalhes do que está vendendo
 											</InputLabel>
 											<Input
@@ -200,7 +191,7 @@ const Publish = ({ userId, image }) => {
 												rows={6}
 												variant='outlined'
 											/>
-											<FormHelperText sx={{ marginLeft: 0 }}>
+											<FormHelperText sx={styles.helperText}>
 												{errors.description && touched.description ? errors.description : null}
 											</FormHelperText>
 										</FormControl>
@@ -208,16 +199,13 @@ const Publish = ({ userId, image }) => {
 								</Container>
 
 								{/* Price */}
-								<Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
-									<Box sx={{
-										backgroundColor: theme.palette.background.white,
-										padding: theme.spacing(3)
-									}}
+								<Container maxWidth='md' sx={styles.container}>
+									<Box sx={styles.divSpacing}
 									>
 
 										<br />
 										<FormControl error={errors.price && touched.price} fullWidth variant='outlined'>
-											<InputLabel sx={{ backgroundColor: 'white', left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+											<InputLabel sx={styles.iptLabel}>
 												Preço de Venda
 											</InputLabel>
 											<Input
@@ -227,7 +215,7 @@ const Publish = ({ userId, image }) => {
 												startAdornment={<InputAdornment position='start'>R$</InputAdornment>}
 												labelwidth={40}
 											/>
-											<FormHelperText sx={{ marginLeft: 0 }}>
+											<FormHelperText sx={styles.helperText}>
 												{errors.price && touched.price ? errors.price : null}
 											</FormHelperText>
 										</FormControl>
@@ -235,17 +223,14 @@ const Publish = ({ userId, image }) => {
 								</Container>
 
 								{/* Contact Data */}
-								<Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
-									<Box sx={{
-										backgroundColor: theme.palette.background.white,
-										padding: theme.spacing(3)
-									}}
+								<Container maxWidth='md' sx={styles.container}>
+									<Box sx={styles.divSpacing}
 									>
 										<Typography component='h6' variant='h6' color={'textPrimary'} gutterBottom>
 											Dados de Contato
 										</Typography>
 										<FormControl error={errors.name && touched.name} fullWidth>
-											<InputLabel sx={{ left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+											<InputLabel sx={styles.iptLabel}>
 												Nome
 											</InputLabel>
 											<Input
@@ -254,7 +239,7 @@ const Publish = ({ userId, image }) => {
 												value={values.name}
 												onChange={handleChange}
 											/>
-											<FormHelperText sx={{ marginLeft: 0 }}>
+											<FormHelperText sx={styles.helperText}>
 												{errors.name && touched.name ? errors.name : null}
 											</FormHelperText>
 										</FormControl>
@@ -262,7 +247,7 @@ const Publish = ({ userId, image }) => {
 										<br /><br />
 
 										<FormControl error={errors.email && touched.email} fullWidth>
-											<InputLabel sx={{ left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+											<InputLabel sx={styles.iptLabel}>
 												Email
 											</InputLabel>
 											<Input
@@ -271,7 +256,7 @@ const Publish = ({ userId, image }) => {
 												value={values.email}
 												onChange={handleChange}
 											/>
-											<FormHelperText sx={{ marginLeft: 0 }}>
+											<FormHelperText sx={styles.helperText}>
 												{errors.email && touched.email ? errors.email : null}
 											</FormHelperText>
 										</FormControl>
@@ -279,7 +264,7 @@ const Publish = ({ userId, image }) => {
 										<br /><br />
 
 										<FormControl error={errors.phone && touched.phone} fullWidth>
-											<InputLabel sx={{ left: '-14px', fontWeight: '400', color: theme.palette.primary.main }}>
+											<InputLabel sx={styles.iptLabel}>
 												Telefone
 											</InputLabel>
 											<Input
@@ -288,7 +273,7 @@ const Publish = ({ userId, image }) => {
 												value={values.phone}
 												onChange={handleChange}
 											/>
-											<FormHelperText sx={{ marginLeft: 0 }}>
+											<FormHelperText sx={styles.helperText}>
 												{errors.phone && touched.phone ? errors.phone : null}
 											</FormHelperText>
 										</FormControl>
@@ -296,11 +281,11 @@ const Publish = ({ userId, image }) => {
 								</Container>
 
 								{/* Publish Button */}
-								<Container maxWidth='md' sx={{ paddingBottom: theme.spacing(3) }}>
+								<Container maxWidth='md' sx={styles.container}>
 									<Box textAlign='right'>
 										{
 											isSubmitting
-												? <CircularProgress sx={{ display: 'block', margin: '10px auto' }} />
+												? <CircularProgress sx={styles.circularProgress} />
 												: (
 													<Button type='submit' variant='contained' color='primary'>
 														Publicar Anúncio

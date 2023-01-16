@@ -4,11 +4,11 @@ import { Paper, InputBase, IconButton, Container, Typography, Box, Grid } from "
 import { Search } from "@mui/icons-material"
 
 import TemplateDefault from "../../src/templates/Default"
-import theme from "../../src/theme"
 import Card from "../../src/components/Card"
 import dbConnect from "../../src/utils/dbConnect"
 import ProductsModel from "../../src/models/products"
 import { formatCurrency } from "../../src/utils/currency"
+import styles from './styles'
 
 const List = ({ products, searchString }) => {
     return (
@@ -17,7 +17,7 @@ const List = ({ products, searchString }) => {
 
                 <Grid container>
                     <Grid item xs={12} sm={12} MD={12}>
-                        <Paper sx={{ display: 'flex', justifyContent: 'center', padding: theme.spacing(0.4, 0.4, 0.4, 1.4), marginTop: '20px' }}>
+                        <Paper sx={styles.paper}>
                             <InputBase
                                 placeholder="Ex.: iPhone 12 com garantia"
                                 fullWidth
@@ -30,7 +30,7 @@ const List = ({ products, searchString }) => {
                 </Grid>
                 <br />
                     <Grid item>
-                        <Box sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
+                        <Box sx={styles.box}>
                             <Typography component='h6' variant='h6'>
                                 Anúncios
                             </Typography>

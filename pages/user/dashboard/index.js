@@ -14,12 +14,13 @@ import {
 } from '@mui/material'
 import axios from 'axios';
 
-import TemplateDefault from '../../src/templates/Default'
-import Card from '../../src/components/Card'
-import ProductsModel from '../../src/models/products'
-import dbConnect from '../../src/utils/dbConnect'
-import { formatCurrency } from '../../src/utils/currency'
-import useToasty from '../../src/contexts/Toasty'
+import TemplateDefault from '../../../src/templates/Default'
+import Card from '../../../src/components/Card'
+import ProductsModel from '../../../src/models/products'
+import dbConnect from '../../../src/utils/dbConnect'
+import { formatCurrency } from '../../../src/utils/currency'
+import useToasty from '../../../src/contexts/Toasty'
+import styles from './styles';
 
 const Home = ({ products }) => {
   const [productId, setProductId] = useState()
@@ -93,7 +94,7 @@ const Home = ({ products }) => {
           Meus Anúncios
         </Typography>
         <Link href={'/user/publish'}>
-          <Button variant='contained' color='primary' sx={{ margin: '30px auto 50px auto', display: 'block'}}>
+          <Button variant='contained' color='primary' sx={styles.newAnnounceBtn}>
             Publicar novo anúncio
           </Button>
         </Link>

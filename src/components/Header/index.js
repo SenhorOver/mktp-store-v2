@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
 import { useSession, signOut } from 'next-auth/react'
 import {
   AppBar, 
@@ -13,17 +14,15 @@ import {
   MenuItem,
   Divider,
 } from '@mui/material'
-
-import Link from 'next/link';
-
-import style from '../../styles/situational.module.css'
 import { AccountCircle } from '@mui/icons-material';
+
+
+import style from '../../../styles/situational.module.css'
+import styles from './styles';
 
 export default function ButtonAppBar() {
   const [anchorUserMenu, setAnchorUserMenu] = useState(false)
   const { data: session } = useSession()
-
-  // console.log(session)
 
   const openUserMenu = Boolean(anchorUserMenu)
 
@@ -38,7 +37,7 @@ export default function ButtonAppBar() {
             </Typography>
           </Link>
           <Link href={session ? '/user/publish' : '/auth/signin'} className={style.headerBtnLink}>
-            <Button color="inherit" variant='outlined' sx={{ marginRight: '10px' }}>
+            <Button color="inherit" variant='outlined' sx={styles.btnSpacing}>
               Anunciar e Vender
             </Button>
           </Link>
@@ -51,7 +50,7 @@ export default function ButtonAppBar() {
                     ? <Avatar src={session.user.image} />
                     : <AccountCircle />
                   }
-                  <Typography variant='subtitle2' color='secondary' sx={{ marginLeft: '8px' }}>
+                  <Typography variant='subtitle2' color='secondary' sx={styles.perfilSpacing}>
                     {session.user.name}
                   </Typography>
                 </IconButton>
@@ -74,7 +73,7 @@ export default function ButtonAppBar() {
             <Link href='/user/publish' className={style.userMenuLinks}>
               <MenuItem>Publicar novo anúncio</MenuItem>
             </Link>
-            <Divider sx={{ margin: '8px 0' }} />
+            <Divider sx={styles.divider} />
             <MenuItem onClick={() => signOut({
               callbackUrl: '/'
             })}>Sair</MenuItem>

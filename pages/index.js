@@ -14,10 +14,10 @@ import { Search } from "@mui/icons-material"
 
 import TemplateDefault from "../src/templates/Default"
 import Card from "../src/components/Card"
-import theme from "../src/theme"
 import dbConnect from '../src/utils/dbConnect'
 import ProductsModel from '../src/models/products'
 import { formatCurrency } from '../src/utils/currency'
+import styles from "./styles"
 
 const Home = ({ products }) => {
     const router = useRouter()
@@ -33,7 +33,7 @@ const Home = ({ products }) => {
                 <Typography component='h1' variant="h3" align="center" color='textPrimary'>
                     O que deseja encontrar?
                 </Typography>
-                <Paper sx={{ display: 'flex', justifyContent: 'center', padding: theme.spacing(0.4, 0.4, 0.4, 1.4), marginTop: '20px' }}>
+                <Paper sx={styles.paper}>
                     <InputBase
                         placeholder="Ex.: iPhone 12 com garantia"
                         fullWidth
@@ -45,7 +45,7 @@ const Home = ({ products }) => {
                     </IconButton>
                 </Paper>
             </Container>
-            <Container maxWidth='lg' sx={{ marginTop: '50px' }}>
+            <Container maxWidth='lg' sx={styles.containerMargin}>
                 <Typography component='h2' variant="h4" align="center" color='textPrimary'>
                     Destaques
                 </Typography>

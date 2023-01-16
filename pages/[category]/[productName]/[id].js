@@ -13,10 +13,10 @@ import Carousel from "react-material-ui-carousel"
 
 import ProductsModel from "../../../src/models/products"
 import TemplateDefault from "../../../src/templates/Default"
-import theme from "../../../src/theme"
 import { formatCurrency } from "../../../src/utils/currency"
 import dbConnect from "../../../src/utils/dbConnect"
 import { formatDate } from "../../../src/utils/date"
+import styles from "./styles"
 
 const Product = ({ product }) => {
     return (
@@ -24,7 +24,7 @@ const Product = ({ product }) => {
             <Container maxWidth='lg'>
                 <Grid container spacing={3}>
                     <Grid item xs={8}>
-                        <Box sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
+                        <Box sx={styles.box}>
                             <Carousel
                                 autoPlay={false}
                                 navButtonsAlwaysVisible={true}
@@ -49,20 +49,20 @@ const Product = ({ product }) => {
                             </Carousel>
                         </Box>
 
-                        <Box sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
+                        <Box sx={styles.box}>
                             <Typography component='span' variant='caption'>
                                 Publicado {formatDate(product.criadoEm)}
                             </Typography>
-                            <Typography component='h4' variant='h4' sx={{ margin: '15px 0' }}>
+                            <Typography component='h4' variant='h4' sx={styles.title}>
                                 {product.title}
                             </Typography>
-                            <Typography component='h4' variant='h4' sx={{ fontWeight: 'bold', marginBottom: '15px' }}>
+                            <Typography component='h4' variant='h4' sx={styles.price}>
                                 {formatCurrency(product.price)}
                             </Typography>
                             <Chip label={product.category} />
                         </Box>
 
-                        <Box sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
+                        <Box sx={styles.box}>
                             <Typography component='h6' variant='h6'>
                                 Descrição
                             </Typography>
@@ -72,7 +72,7 @@ const Product = ({ product }) => {
                         </Box>
                     </Grid>
                     <Grid item xs={4}>
-                        <Card elevation={0} sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
+                        <Card elevation={0} sx={styles.box}>
                             <CardHeader 
                                 avatar={
                                 <Avatar src={product.user.image}>
@@ -93,7 +93,7 @@ const Product = ({ product }) => {
                         </Card>
 
                         {/* Colocar a localização do usuário */}
-                        <Box sx={{ backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
+                        <Box sx={styles.box}>
                             <Typography component='h6' variant='h6'>
                                 Localização
                             </Typography>
