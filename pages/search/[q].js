@@ -1,31 +1,37 @@
+import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import slugify from "slugify"
-import { Paper, InputBase, IconButton, Container, Typography, Box, Grid } from "@mui/material"
-import { Search } from "@mui/icons-material"
+import { Container, Typography, Box, Grid } from "@mui/material"
 
 import TemplateDefault from "../../src/templates/Default"
 import Card from "../../src/components/Card"
 import dbConnect from "../../src/utils/dbConnect"
 import ProductsModel from "../../src/models/products"
 import { formatCurrency } from "../../src/utils/currency"
+import SearchBar from '../../src/components/SearchBar'
 import styles from './styles'
 
 const List = ({ products, searchString }) => {
+    const router = useRouter()
+    const [search, setSearch] = useState()
+
+    const handleSearch = (e) => {
+        e.preventDefault()
+        router.push(`/search/${search}`)
+    }
+
     return (
         <TemplateDefault>
             <Container maxWidth='lg'>
 
                 <Grid container>
                     <Grid item xs={12} sm={12} MD={12}>
-                        <Paper sx={styles.paper}>
-                            <InputBase
-                                placeholder="Ex.: iPhone 12 com garantia"
-                                fullWidth
-                            />
-                            <IconButton>
-                                <Search />
-                            </IconButton>
-                        </Paper>
+                        <SearchBar 
+                            handleSearch={handleSearch}
+                            search={search}
+                            setSearch={setSearch}
+                        />
                     </Grid>
                 </Grid>
                 <br />

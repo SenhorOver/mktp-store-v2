@@ -3,27 +3,25 @@ import { useRouter } from 'next/router'
 import { useState } from "react"
 import slugify from "slugify"
 import {
-    IconButton,
-    InputBase,
     Typography,
     Container,
-    Paper,
     Grid 
 } from "@mui/material"
-import { Search } from "@mui/icons-material"
 
 import TemplateDefault from "../src/templates/Default"
 import Card from "../src/components/Card"
 import dbConnect from '../src/utils/dbConnect'
 import ProductsModel from '../src/models/products'
 import { formatCurrency } from '../src/utils/currency'
+import SearchBar from "../src/components/SearchBar"
 import styles from "./styles"
 
 const Home = ({ products }) => {
     const router = useRouter()
     const [search, setSearch] = useState()
 
-    const handleSearch = () => {
+    const handleSearch = (e) => {
+        e.preventDefault()
         router.push(`/search/${search}`)
     }
 
@@ -33,17 +31,11 @@ const Home = ({ products }) => {
                 <Typography component='h1' variant="h3" align="center" color='textPrimary'>
                     O que deseja encontrar?
                 </Typography>
-                <Paper sx={styles.paper}>
-                    <InputBase
-                        placeholder="Ex.: iPhone 12 com garantia"
-                        fullWidth
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <IconButton onClick={handleSearch}>
-                        <Search />
-                    </IconButton>
-                </Paper>
+                <SearchBar 
+                    setSearch={setSearch}
+                    search={search}
+                    handleSearch={handleSearch}
+                />
             </Container>
             <Container maxWidth='lg' sx={styles.containerMargin}>
                 <Typography component='h2' variant="h4" align="center" color='textPrimary'>
