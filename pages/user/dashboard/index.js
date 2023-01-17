@@ -21,6 +21,7 @@ import dbConnect from '../../../src/utils/dbConnect'
 import { formatCurrency } from '../../../src/utils/currency'
 import useToasty from '../../../src/contexts/Toasty'
 import styles from './styles';
+import slugify from 'slugify';
 
 const Home = ({ products }) => {
   const [productId, setProductId] = useState()
@@ -107,27 +108,52 @@ const Home = ({ products }) => {
           </Typography>
         }
         <Grid container spacing={4}>
+        {/* {
+                        products.map(product => {
+                            const category = slugify(product.category).toLocaleLowerCase()
+                            const title = slugify(product.title).toLocaleLowerCase()
+                            return (
+                                <Grid key={product._id} item xs={12} sm={6} md={4}>
+                                    <Link href={`/${category}/${title}/${product._id}`} legacyBehavior>
+                                        <a style={{ textDecoration: 'none' }}>
+                                            <Card 
+                                                title={product.title}
+                                                subtitle={formatCurrency(product.price)}
+                                                image={`/uploads/${product.files[0].name}`}
+                                            />
+                                        </a>
+                                    </Link>
+                                </Grid>
+                            )
+                        })
+                    } */}
           {
             products.map(product => {
               if(removedProducts.includes(product._id)) return null
+              const category = slugify(product.category).toLocaleLowerCase()
+              const title = slugify(product.title).toLocaleLowerCase()
               
               return (
                 <Grid key={product._id} item xs={12} sm={6} md={4}>
-                  <Card 
-                    image={`/uploads/${product.files[0].name}`}
-                    title={product.title}
-                    subtitle={formatCurrency(product.price)}
-                    actions={
-                      <>
-                        <Button size='small' color='primary' >
-                          Editar
-                        </Button>
-                        <Button size='small' color='primary' onClick={() => handleClickRemove(product._id)} >
-                          Remover
-                        </Button>
-                      </>
-                    }
-                  />
+                  <Link href={`/${category}/${title}/${product._id}`} legacyBehavior>
+                    <a style={{ textDecoration: 'none' }}>
+                      <Card 
+                        image={`/uploads/${product.files[0].name}`}
+                        title={product.title}
+                        subtitle={formatCurrency(product.price)}
+                        actions={
+                          <>
+                            <Button size='small' color='primary' >
+                              Editar
+                            </Button>
+                            <Button size='small' color='primary' onClick={() => handleClickRemove(product._id)} >
+                              Remover
+                            </Button>
+                          </>
+                        }
+                      />
+                    </a>
+                  </Link>
                 </Grid>
               )
             })  

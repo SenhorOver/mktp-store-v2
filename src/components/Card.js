@@ -1,6 +1,7 @@
 import { Card as CardMUI, CardMedia, CardContent, Typography, CardActions } from "@mui/material"
 
 const Card = ({ image, title, subtitle, actions }) => {
+    console.log(title)
     return (
         <CardMUI>
               <CardMedia 
@@ -9,7 +10,7 @@ const Card = ({ image, title, subtitle, actions }) => {
                 sx={{ paddingTop: '56%' }}
               />
               <CardContent>
-                <Typography variant='h5' component='h2'>
+                <Typography variant='h5' component='h2' sx={{ height: '40px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                   {title}
                 </Typography>
                 <Typography>
