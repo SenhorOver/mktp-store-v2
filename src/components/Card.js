@@ -1,7 +1,6 @@
 import { Card as CardMUI, CardMedia, CardContent, Typography, CardActions } from "@mui/material"
 
 const Card = ({ image, title, subtitle, actions }) => {
-    console.log(title)
     return (
         <CardMUI>
               <CardMedia 

@@ -6,9 +6,13 @@ const filesSchema = new mongoose.Schema({
 })
 
 const schema = new mongoose.Schema({
-  criadoEm: {
+  createdIn: {
     type: Date,
     default: Date.now,
+  },
+  editedIn: {
+    type: Date,
+    default: '',
   },
   title: {
         type: String,
@@ -32,6 +36,13 @@ const schema = new mongoose.Schema({
       email: String,
       phone: String,
       image: String,
+    },
+    location: {
+      cep: String,
+      uf: String,
+      city: String,
+      district: String,
+      publicPlace: String,
     },
     files: {
       type: [filesSchema],

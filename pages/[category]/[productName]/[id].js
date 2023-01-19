@@ -51,7 +51,7 @@ const Product = ({ product }) => {
 
                         <Box sx={styles.box}>
                             <Typography component='span' variant='caption'>
-                                Publicado {formatDate(product.criadoEm)}
+                                Publicado {formatDate(product.createdIn)}
                             </Typography>
                             <Typography component='h4' variant='h4' sx={styles.title}>
                                 {product.title}
@@ -94,8 +94,43 @@ const Product = ({ product }) => {
 
                         {/* Colocar a localização do usuário */}
                         <Box sx={styles.box}>
-                            <Typography component='h6' variant='h6'>
+                            <Typography component='h6' variant='h6' gutterBottom>
                                 Localização
+                            </Typography>
+
+                            <Typography component={'p'} variant='body2'>
+                                {'CEP: '}
+                                <Typography component={'span'} variant='subtitle2'>
+                                    {product.location.cep} 
+                                </Typography>
+                            </Typography>
+
+                            <Typography component={'p'} variant='body2'>
+                                {'UF: '}
+                                <Typography component={'span'} variant='subtitle2'>
+                                    {product.location.uf} 
+                                </Typography>
+                            </Typography>
+
+                            <Typography component={'p'} variant='body2'>
+                                {'Cidade: '}
+                                <Typography component={'span'} variant='subtitle2'>
+                                    {product.location.city} 
+                                </Typography>
+                            </Typography>
+
+                            <Typography component={'p'} variant='body2'>
+                                {'Bairro: '}
+                                <Typography component={'span'} variant='subtitle2'>
+                                    {product.location.district} 
+                                </Typography>
+                            </Typography>
+
+                            <Typography component={'p'} variant='body2'>
+                                {'Logradouro: '}
+                                <Typography component={'span'} variant='subtitle2'>
+                                    {product.location.publicPlace} 
+                                </Typography>
                             </Typography>
                         </Box>
                     </Grid>

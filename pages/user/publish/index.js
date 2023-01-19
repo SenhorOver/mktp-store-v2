@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react'
 import {
@@ -24,7 +25,8 @@ import useToasty from '../../../src/contexts/Toasty'
 import styles from './styles';
 
 
-const Publish = ({ userId, image }) => {
+const Publish = ({ userId, image, states }) => {
+	const [cities, setCities] = useState([])
 	const { setToasty } = useToasty()
 	const router = useRouter()
 
@@ -57,7 +59,7 @@ const Publish = ({ userId, image }) => {
 
 	const handleformSubmit = (values) => {
 		const formData = new FormData()
-		
+
 		for(let field in values){
 			if(field === 'files'){
 				values.files.forEach(file => {
@@ -101,8 +103,50 @@ const Publish = ({ userId, image }) => {
 						handleChange,
 						handleSubmit,
 						setFieldValue,
+						setFieldTouched,
 						isSubmitting,
 					}) => {
+						const handleStateChange = async (e) => {
+							setFieldValue('city', '')
+							setFieldTouched('city', false)
+							const uf = e.target
+								? setFieldValue('uf', e.target.value) && e.target.value
+								: setFieldValue('uf', e.uf) && e.uf
+							
+							const city = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`)
+
+							setCities(city.data)
+						}
+
+						const handleSearchCep = async () => {
+							let cep = values.cep
+							cep = cep.split('-')
+							cep = cep.join('')
+							let informations = null
+
+							try {
+								informations = await axios.get(`http://viacep.com.br/ws/${cep}/json/`)
+							} catch (e) {
+								return
+							}
+
+							const data = informations.data
+							if(data.erro) {
+								setToasty({
+									open: true,
+									text: 'CEP Inválido, não foi possível buscar suas informações',
+									severity: 'error',
+								})
+								return
+							}
+
+							await handleStateChange(data)
+
+							setFieldValue('city', data.localidade)
+							setFieldValue('district', data.bairro)
+							setFieldValue('publicPlace', data.logradouro)
+						}
+
 						return (
 							<form onSubmit={handleSubmit}>
 								<Input type='hidden' name="userId" value={values.userId} />
@@ -222,6 +266,143 @@ const Publish = ({ userId, image }) => {
 									</Box>
 								</Container>
 
+
+
+								{/* Location */}
+								<Container maxWidth='md' sx={styles.container}>
+									<Box sx={styles.divSpacing}
+									>
+										<Typography component='h6' variant='h6' color={'textPrimary'} gutterBottom>
+											Localização
+										</Typography>
+										
+										<Box sx={{ display: 'flex', justifyContent: 'left', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
+											<FormControl error={errors.cep && touched.cep}>
+												<InputLabel sx={styles.iptCep}>
+													CEP
+												</InputLabel>
+												<Input
+													variant='standard'
+													name='cep'
+													value={values.cep}
+													onChange={handleChange}
+												/>
+												<FormHelperText sx={styles.helperText}>
+													{errors.cep && touched.cep ? errors.cep : null}
+												</FormHelperText>
+											</FormControl>
+
+											<Button type='button' variant='outlined' color='primary' onClick={handleSearchCep}>
+												Achar localização
+											</Button>
+										</Box>
+
+										<br />
+
+										<Box sx={{ display: 'flex', justifyContent: 'left', alignItems: 'center', flexWrap: 'wrap', gap: '25px' }}>
+											<FormControl error={errors.uf && touched.uf}>
+												<InputLabel sx={styles.iptCep}>
+													UF
+												</InputLabel>
+												<Select
+													name="uf"
+													value={values.uf}
+													onChange={handleStateChange}
+													fullWidth
+													variant='standard'
+													sx={styles.uf}
+												>
+													{
+														states.map(state => (
+															<MenuItem value={state.sigla}>{state.sigla}</MenuItem>
+														))
+													}
+												</Select>
+												<FormHelperText sx={styles.helperText}>
+													{errors.uf && touched.uf ? errors.uf : null}
+												</FormHelperText>
+											</FormControl>
+
+
+
+
+											<FormControl error={errors.city && touched.city}>
+												<InputLabel sx={styles.iptCep}>
+													Cidades
+												</InputLabel>
+												<Select
+													name="city"
+													value={values.city}
+													onChange={handleChange}
+													fullWidth
+													variant='standard'
+													sx={styles.iptLocation}
+												>
+													{
+														cities.map(city => (
+															<MenuItem value={city.nome}>{city.nome}</MenuItem>
+														))
+													}
+												</Select>
+												<FormHelperText sx={styles.helperText}>
+													{errors.city && touched.city ? errors.city : null}
+												</FormHelperText>
+											</FormControl>
+
+
+
+											<FormControl error={errors.district && touched.district} >
+												<InputLabel sx={styles.iptLabel}>
+													Bairro
+												</InputLabel>
+												<Input
+													variant='standard'
+													name='district'
+													value={values.district}
+													onChange={handleChange}
+													sx={styles.iptLocation}
+												/>
+												<FormHelperText sx={styles.helperText}>
+													{errors.district && touched.district ? errors.district : null}
+												</FormHelperText>
+											</FormControl>
+										</Box>
+
+										<br />
+
+											<FormControl error={errors.publicPlace && touched.publicPlace} fullWidth>
+												<InputLabel sx={styles.iptLabel}>
+													Logradouro (Rua, Avenida, etc)
+												</InputLabel>
+												<Input
+													variant='standard'
+													name='publicPlace'
+													value={values.publicPlace}
+													onChange={handleChange}
+												/>
+												<FormHelperText sx={styles.helperText}>
+													{errors.publicPlace && touched.publicPlace ? errors.publicPlace : null}
+												</FormHelperText>
+											</FormControl>
+
+
+										{/* <FormControl error={errors.phone && touched.phone} fullWidth>
+											<InputLabel sx={styles.iptLabel}>
+												Telefone
+											</InputLabel>
+											<Input
+												variant='standard'
+												name='phone'
+												value={values.phone}
+												onChange={handleChange}
+											/>
+											<FormHelperText sx={styles.helperText}>
+												{errors.phone && touched.phone ? errors.phone : null}
+											</FormHelperText>
+										</FormControl> */}
+									</Box>
+								</Container>
+
 								{/* Contact Data */}
 								<Container maxWidth='md' sx={styles.container}>
 									<Box sx={styles.divSpacing}
@@ -309,10 +490,13 @@ Publish.requireAuth = true
 export async function getServerSideProps({ req }){
 	const { userId, user } = await getSession({ req })
 
+	const states = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+
 	return {
 		props: {
 			userId,
-			image: user.image
+			image: user.image,
+			states: states.data
 		}
 	}
 }
