@@ -36,11 +36,32 @@ export default function ButtonAppBar() {
               Mktp Store
             </Typography>
           </Link>
-          <Link href={session ? '/user/publish' : '/auth/signin'} className={style.headerBtnLink}>
-            <Button color="inherit" variant='outlined' sx={styles.btnSpacing}>
-              Anunciar e Vender
-            </Button>
-          </Link>
+          {
+            session
+              ? (
+                <Link href='/user/publish' className={style.headerBtnLink}>
+                  <Button color="inherit" variant='outlined' sx={styles.btnSpacing}>
+                    Anunciar e Vender
+                  </Button>
+                </Link>
+              )
+              : (
+                <>
+                  <Link href='/auth/signup' className={style.headerBtnLink}>
+                    <Button color="inherit" variant='outlined' sx={styles.btnSpacing}>
+                      Cadastrar-se
+                    </Button>
+                  </Link>
+
+                  <Link href='/auth/signin' className={style.headerBtnLinkLogin}>
+                    <Button color="inherit" variant='contained' sx={styles.btnLogin}>
+                      Entrar
+                    </Button>
+                  </Link>
+                </>
+              )
+          }
+          
           {
             session
               ? (

@@ -23,7 +23,7 @@ const Product = ({ product }) => {
         <TemplateDefault>
             <Container maxWidth='lg'>
                 <Grid container spacing={3}>
-                    <Grid item xs={8}>
+                    <Grid item xs={12} md={8}>
                         <Box sx={styles.box}>
                             <Carousel
                                 autoPlay={false}
@@ -75,16 +75,16 @@ const Product = ({ product }) => {
                             <Chip label={product.category} />
                         </Box>
 
-                        <Box sx={styles.box}>
+                        <Box sx={styles.descriptionBox}>
                             <Typography component='h6' variant='h6'>
                                 Descrição
                             </Typography>
-                            <Typography component={'p'} variant='body2'>
+                            <Typography component={'p'} variant='body2' sx={{ overflow: 'auto' }}>
                                 {product.description}
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} md={4}>
                         <Card elevation={0} sx={styles.box}>
                             <CardHeader 
                                 avatar={

@@ -1,5 +1,6 @@
-import { Formik } from "formik"
+import Link from 'next/link'
 import { useRouter } from "next/router";
+import { Formik } from "formik"
 import { signIn, useSession } from "next-auth/react"
 
 import {
@@ -148,6 +149,9 @@ const Signin = ({ APP_URL }) => {
 						}
 					</Formik>
 				</Box>
+						<Link href='/auth/signup' style={{  color: 'black', textDecoration: 'none'  }}> 
+							Clique aqui para cadastrar-se
+						</Link>
 			</Container>
 		</TemplateDefault>
 	)

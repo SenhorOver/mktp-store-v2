@@ -1,15 +1,30 @@
+import { useState } from "react"
+import { useRouter } from 'next/router'
 import {
   IconButton,
   InputBase,
   Paper,
+  CircularProgress,
 } from "@mui/material"
 import { Search } from "@mui/icons-material"
 
 import styles from "./styles"
 
-const SearchBar = ({ handleSearch, search, setSearch }) => {
+const SearchBar = () => {
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const [search, setSearch] = useState()
+
+  const handleSearch = (e) => {
+      e.preventDefault()
+      if(!search) return
+
+      setLoading(true)
+      router.push(`/search/${search}`)
+      setLoading(false)
+  }
   return (
-    <form onSubmit={handleSearch}>
+    <form onSubmit={handleSearch} style={{ padding: '0 15px' }}>
       <Paper sx={styles.paper}>
         <InputBase
             placeholder="Ex.: iPhone 12 com garantia"
@@ -17,8 +32,12 @@ const SearchBar = ({ handleSearch, search, setSearch }) => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
         />
-        <IconButton>
-            <Search />
+        <IconButton type="submit">
+          {
+            loading
+              ? <CircularProgress size={'24px'} />
+              : <Search /> 
+          }
         </IconButton>
       </Paper>
     </form>

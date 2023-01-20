@@ -1,6 +1,4 @@
-import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import slugify from "slugify"
 import { Container, Typography, Box, Grid } from "@mui/material"
 
@@ -13,25 +11,13 @@ import SearchBar from '../../src/components/SearchBar'
 import styles from './styles'
 
 const List = ({ products, searchString }) => {
-    const router = useRouter()
-    const [search, setSearch] = useState()
-
-    const handleSearch = (e) => {
-        e.preventDefault()
-        router.push(`/search/${search}`)
-    }
-
     return (
         <TemplateDefault>
             <Container maxWidth='lg'>
 
                 <Grid container>
-                    <Grid item xs={12} sm={12} MD={12}>
-                        <SearchBar 
-                            handleSearch={handleSearch}
-                            search={search}
-                            setSearch={setSearch}
-                        />
+                    <Grid item xs={12} sm={12} md={12}>
+                        <SearchBar />
                     </Grid>
                 </Grid>
                 <br />
@@ -40,7 +26,7 @@ const List = ({ products, searchString }) => {
                             <Typography component='h6' variant='h6'>
                                 Anúncios
                             </Typography>
-                            <Typography>
+                            <Typography sx={{ overflow: 'hidden' }}>
                                 ENCONTRADOS {products.length} ANÚNCIOS PARA O TERMO "{searchString}"
                             </Typography>
                             <br />

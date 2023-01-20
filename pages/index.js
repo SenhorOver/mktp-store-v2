@@ -1,6 +1,4 @@
 import Link from "next/link"
-import { useRouter } from 'next/router'
-import { useState } from "react"
 import slugify from "slugify"
 import {
     Typography,
@@ -17,25 +15,13 @@ import SearchBar from "../src/components/SearchBar"
 import styles from "./styles"
 
 const Home = ({ products }) => {
-    const router = useRouter()
-    const [search, setSearch] = useState()
-
-    const handleSearch = (e) => {
-        e.preventDefault()
-        router.push(`/search/${search}`)
-    }
-
     return (
         <TemplateDefault>
             <Container disableGutters maxWidth='md'>
                 <Typography component='h1' variant="h3" align="center" color='textPrimary'>
                     O que deseja encontrar?
                 </Typography>
-                <SearchBar 
-                    setSearch={setSearch}
-                    search={search}
-                    handleSearch={handleSearch}
-                />
+                <SearchBar />
             </Container>
             <Container maxWidth='lg' sx={styles.containerMargin}>
                 <Typography component='h2' variant="h4" align="center" color='textPrimary'>

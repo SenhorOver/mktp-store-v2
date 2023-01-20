@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Formik } from "formik"
 import axios from 'axios';
 import { useRouter } from "next/router";
@@ -137,6 +138,9 @@ const Signup = () => {
 						}
 					</Formik>
 				</Box>
+				<Link href='/auth/signin' style={{  color: 'black', textDecoration: 'none' }}>
+					Clique aqui para fazer login
+				</Link>
 			</Container>
 		</TemplateDefault>
 	)
