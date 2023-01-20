@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import { 
   Button, 
@@ -24,12 +25,17 @@ import styles from './styles';
 import slugify from 'slugify';
 
 const Home = ({ products }) => {
+  const router = useRouter()
   const [productId, setProductId] = useState()
   const [openConfirmModal, setOpenConfirmModal] = useState(false)
   const [removedProducts, setRemovedProducts] = useState([])
   const { setToasty } = useToasty()
 
   const handleCloseModal = () => setOpenConfirmModal(false)
+
+  const handleClickEdit = (productId) => {
+    router.push(`/user/edit/${productId}`)
+  }
 
   const handleClickRemove = (productId) => {
     setProductId(productId)
@@ -108,25 +114,6 @@ const Home = ({ products }) => {
           </Typography>
         }
         <Grid container spacing={4}>
-        {/* {
-                        products.map(product => {
-                            const category = slugify(product.category).toLocaleLowerCase()
-                            const title = slugify(product.title).toLocaleLowerCase()
-                            return (
-                                <Grid key={product._id} item xs={12} sm={6} md={4}>
-                                    <Link href={`/${category}/${title}/${product._id}`} legacyBehavior>
-                                        <a style={{ textDecoration: 'none' }}>
-                                            <Card 
-                                                title={product.title}
-                                                subtitle={formatCurrency(product.price)}
-                                                image={`/uploads/${product.files[0].name}`}
-                                            />
-                                        </a>
-                                    </Link>
-                                </Grid>
-                            )
-                        })
-                    } */}
           {
             products.map(product => {
               if(removedProducts.includes(product._id)) return null
@@ -135,25 +122,24 @@ const Home = ({ products }) => {
               
               return (
                 <Grid key={product._id} item xs={12} sm={6} md={4}>
-                  <Link href={`/${category}/${title}/${product._id}`} legacyBehavior>
-                    <a style={{ textDecoration: 'none' }}>
-                      <Card 
-                        image={`/uploads/${product.files[0].name}`}
-                        title={product.title}
-                        subtitle={formatCurrency(product.price)}
-                        actions={
-                          <>
-                            <Button size='small' color='primary' >
-                              Editar
-                            </Button>
-                            <Button size='small' color='primary' onClick={() => handleClickRemove(product._id)} >
-                              Remover
-                            </Button>
-                          </>
-                        }
-                      />
-                    </a>
-                  </Link>
+                  <Card 
+                    image={`/uploads/${product.files[0].name}`}
+                    title={product.title}
+                    subtitle={formatCurrency(product.price)}
+                    actions={
+                      <>
+                        <Button size='small' color='primary' onClick={() => handleClickEdit(product._id)} >
+                          Editar
+                        </Button>
+                        <Button size='small' color='primary' onClick={() => handleClickRemove(product._id)} >
+                          Remover
+                        </Button>
+                        <Button size='small' color='primary' onClick={() => router.push(`/${category}/${title}/${product._id}`)}>
+                          Ver página
+                        </Button>
+                      </>
+                    }
+                  />
                 </Grid>
               )
             })  

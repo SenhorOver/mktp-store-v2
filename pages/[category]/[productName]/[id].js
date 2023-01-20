@@ -51,7 +51,11 @@ const Product = ({ product }) => {
 
                         <Box sx={styles.box}>
                             <Typography component='span' variant='caption'>
-                                Publicado {formatDate(product.createdIn)}
+                                Publicado em: <b>{formatDate(product.createdIn)}</b>
+                            </Typography>
+                            <br />
+                            <Typography component='span' variant='caption'>
+                                Última vez editado em: <b>{formatDate(product.editedIn)}</b>
                             </Typography>
                             <Typography component='h4' variant='h4' sx={styles.title}>
                                 {product.title}

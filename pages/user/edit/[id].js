@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react'
 import {
@@ -19,24 +19,62 @@ import { Formik } from 'formik';
 import axios from 'axios';
 
 import TemplateDefault from '../../../src/templates/Default'
-import { initialValues, validateSchema } from './formValues';
+import { validateSchema } from './formValues';
 import FileUpload from '../../../src/components/fileUpload';
+import ExistentFiles from '../../../src/components/ExistentFiles';
 import useToasty from '../../../src/contexts/Toasty'
 import styles from './styles';
+import dbConnect from '../../../src/utils/dbConnect';
+import ProductsModel from '../../../src/models/products';
 
 
-const Publish = ({ userId, image, states }) => {
+const Publish = ({ userId, image, states, product }) => {
 	const [cities, setCities] = useState([])
 	const { setToasty } = useToasty()
 	const router = useRouter()
 
 	const formValues = {
-		...initialValues,
+		existentFiles: [],
+		files: []
 	}
 
+	for(let field in product){
+		if(field === 'user'){
+			for(let objField in product[field]){
+				formValues[objField] = product[field][objField]
+			}
+			continue
+		}
+
+		if(field === 'location'){
+			for(let objField in product[field]){
+				formValues[objField] = product[field][objField]
+			}
+			continue
+		}
+
+		if(field === 'files'){
+			product[field].forEach(file => {
+				formValues.existentFiles.push(file)
+			})
+			continue
+		}
+
+		formValues[field] = product[field]
+	}
+	
 	formValues.userId = userId
 	formValues.image = image
 
+	useEffect(() => {
+		if(!product) router.push('/')
+		async function searchCity(){
+			const city = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${formValues.uf}/municipios`)
+			setCities(city.data)
+		}
+		searchCity()
+	}, [])
+	
 	const handleSuccess = () => {
 		setToasty({
 			open: true,
@@ -63,14 +101,20 @@ const Publish = ({ userId, image, states }) => {
 				values.files.forEach(file => {
 					formData.append('files', file)
 				})
-			} else {
-				formData.append(field, values[field])
+				continue
 			}
+			if(field === 'existentFiles'){
+				values.existentFiles.forEach(file => {
+					formData.append('existentFiles', JSON.stringify(file))
+				})
+				continue
+			}
+			formData.append(field, values[field])
 		}
 
 		
 		
-		axios.post('/api/products/add', formData)
+		axios.put(`/api/products/${product._id}`, formData)
 			.then(handleSuccess)
 			.catch(handleError)
 	}
@@ -94,6 +138,8 @@ const Publish = ({ userId, image, states }) => {
 				onSubmit={handleformSubmit}
 			>
 				{
+					product
+						?
 					({
 						touched,
 						values,
@@ -209,11 +255,23 @@ const Publish = ({ userId, image, states }) => {
 									<Box sx={styles.divSpacing}
 									>
 										<FileUpload
+											existentFiles={values.existentFiles}
 											files={values.files}
 											errors={errors.files}
 											touched={touched.files}
 											setFieldValue={setFieldValue}
 										/>
+									</Box>
+								</Container>
+
+								<Container maxWidth='md' sx={styles.container}>
+									<Box sx={styles.divSpacing}
+									>
+										<ExistentFiles
+											existentFiles={values.existentFiles}
+											setFieldValue={setFieldValue}
+										/>
+												
 									</Box>
 								</Container>
 
@@ -382,22 +440,6 @@ const Publish = ({ userId, image, states }) => {
 													{errors.publicPlace && touched.publicPlace ? errors.publicPlace : null}
 												</FormHelperText>
 											</FormControl>
-
-
-										{/* <FormControl error={errors.phone && touched.phone} fullWidth>
-											<InputLabel sx={styles.iptLabel}>
-												Telefone
-											</InputLabel>
-											<Input
-												variant='standard'
-												name='phone'
-												value={values.phone}
-												onChange={handleChange}
-											/>
-											<FormHelperText sx={styles.helperText}>
-												{errors.phone && touched.phone ? errors.phone : null}
-											</FormHelperText>
-										</FormControl> */}
 									</Box>
 								</Container>
 
@@ -476,6 +518,9 @@ const Publish = ({ userId, image, states }) => {
 							</form>
 						)
 					}
+					: <Typography component={'h1'} variant='h2' align='center' color={'textPrimary'}>
+							ERRO, PRODUTO NÃO PODE SER ALTERADO POR USUÁRIO QUE NÃO O CRIOU - REDIRECIONANDO PARA PÁGINA INICIAL
+						</Typography>
 				}
 
 			</Formik>
@@ -485,16 +530,20 @@ const Publish = ({ userId, image, states }) => {
 
 Publish.requireAuth = true
 
-export async function getServerSideProps({ req }){
+export async function getServerSideProps({ req, query }){
+	await dbConnect()
 	const { userId, user } = await getSession({ req })
+	const { id } = query
 
 	const states = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+	const product = await ProductsModel.findOne({ $and: [{ _id: id },{ 'user.id': userId }] })
 
 	return {
 		props: {
 			userId,
 			image: user.image,
-			states: states.data
+			states: states.data,
+			product: JSON.parse(JSON.stringify(product)),
 		}
 	}
 }

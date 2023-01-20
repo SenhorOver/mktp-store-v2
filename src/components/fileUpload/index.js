@@ -8,7 +8,7 @@ import {
 
 import Root, { classes, materialStyles } from './styles';
 
-const FileUpload = ({ files, errors, touched, setFieldValue }) => {
+const FileUpload = ({ files, errors, touched, setFieldValue, existentFiles }) => {
     const { getRootProps, getInputProps } = useDropzone({
         accept: 'image/*',
         onDrop: (acceptedFile) => {
@@ -37,11 +37,7 @@ const FileUpload = ({ files, errors, touched, setFieldValue }) => {
             <Typography component='div' variant='body2' color={errors && touched ? 'error' : 'textPrimary'}>
                 A primeira imagem é a foto principal do seu anúncio
             </Typography>
-            {
-                errors && touched
-                ? <Typography variant='body2' color='error' gutterBottom>{errors}</Typography>
-                : null
-            }   
+              
             <Box sx={materialStyles.outsideBox}>
                 <Box sx={materialStyles.insideBox}
                 {...getRootProps()}
@@ -55,13 +51,15 @@ const FileUpload = ({ files, errors, touched, setFieldValue }) => {
                     files.map((file,ix) => (
                         <Box className={classes.imgHover} key={file.preview} sx={{...materialStyles.addedImagesBox, backgroundImage: `url(${file.preview})`}}>
                             {
-                                ix === 0 
-                                ? 
-                                <Box sx={materialStyles.mainImageSignal}>
-                                    <Typography variant='body' color='secondary'>
-                                        Principal
-                                    </Typography>
-                                </Box>
+                                
+                                ix === 0 && existentFiles.length === 0
+                                ?  (
+                                    <Box sx={materialStyles.mainImageSignal}>
+                                        <Typography variant='body' color='secondary'>
+                                            Principal
+                                        </Typography>
+                                    </Box>
+                                )
                                 : null
                                 }
                             <Box className={classes.imgMask} sx={materialStyles.deleteMask}>
@@ -71,8 +69,13 @@ const FileUpload = ({ files, errors, touched, setFieldValue }) => {
                             </Box>
                         </Box>
                     ))
-                }     
+                }    
             </Box>     
+                {
+                    errors && touched
+                    ? <Typography variant='body2' color='error' gutterBottom>{errors}</Typography>
+                    : null
+                }  
         </Root>
     )
 }
