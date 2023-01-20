@@ -55,7 +55,16 @@ const Product = ({ product }) => {
                             </Typography>
                             <br />
                             <Typography component='span' variant='caption'>
-                                Última vez editado em: <b>{formatDate(product.editedIn)}</b>
+                                {
+                                    product.editedIn
+                                        ? 'Última vez editado em: '
+                                        : null
+                                }
+                                {
+                                    product.editedIn 
+                                        ? (<b> {formatDate(product.editedIn)} </b>)
+                                        : null
+                                }
                             </Typography>
                             <Typography component='h4' variant='h4' sx={styles.title}>
                                 {product.title}

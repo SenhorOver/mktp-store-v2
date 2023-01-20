@@ -51,17 +51,27 @@ const FileUpload = ({ files, errors, touched, setFieldValue, existentFiles }) =>
                     files.map((file,ix) => (
                         <Box className={classes.imgHover} key={file.preview} sx={{...materialStyles.addedImagesBox, backgroundImage: `url(${file.preview})`}}>
                             {
-                                
-                                ix === 0 && existentFiles.length === 0
-                                ?  (
-                                    <Box sx={materialStyles.mainImageSignal}>
-                                        <Typography variant='body' color='secondary'>
-                                            Principal
-                                        </Typography>
-                                    </Box>
-                                )
-                                : null
+                                existentFiles
+                                    ? ix === 0 && existentFiles.length === 0
+                                        ?  (
+                                            <Box sx={materialStyles.mainImageSignal}>
+                                                <Typography variant='body' color='secondary'>
+                                                    Principal
+                                                </Typography>
+                                            </Box>
+                                        )
+                                        : null
+                                    : ix === 0
+                                    ?  (
+                                        <Box sx={materialStyles.mainImageSignal}>
+                                            <Typography variant='body' color='secondary'>
+                                                Principal
+                                            </Typography>
+                                        </Box>
+                                    )
+                                    : null
                                 }
+                                
                             <Box className={classes.imgMask} sx={materialStyles.deleteMask}>
                                 <IconButton color='secondary' onClick={() => handleRemoveFile(file.preview)}>
                                     <DeleteForever fontSize='large' />
