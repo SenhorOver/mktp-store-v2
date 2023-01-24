@@ -16,7 +16,7 @@ import {
 	CircularProgress
 } from '@mui/material'
 import { Formik } from 'formik';
-import axios from '../../../src/utils/axios'
+import axios from 'axios'
 
 import TemplateDefault from '../../../src/templates/Default'
 import { initialValues, validateSchema } from '../../../src/pages/user/publish/formValues'
