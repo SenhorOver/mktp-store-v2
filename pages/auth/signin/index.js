@@ -17,9 +17,9 @@ import {
 } from "@mui/material"
 
 import TemplateDefault from "../../../src/templates/Default"
-import { initialValues, validationSchema } from "./formValues"
+import { initialValues, validationSchema } from "../../../src/pages/auth/signin/formValues";
 import Image from "next/image";
-import styles from "./styles";
+import styles from "../../../src/pages/auth/signin/styles";
 
 const Signin = ({ APP_URL }) => {
 	const router = useRouter()

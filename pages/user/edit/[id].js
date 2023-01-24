@@ -19,11 +19,11 @@ import { Formik } from 'formik';
 import axios from 'axios';
 
 import TemplateDefault from '../../../src/templates/Default'
-import { validateSchema } from './formValues';
+import { validateSchema } from '../../../src/pages/user/edit/formValues'
 import FileUpload from '../../../src/components/fileUpload';
 import ExistentFiles from '../../../src/components/ExistentFiles';
 import useToasty from '../../../src/contexts/Toasty'
-import styles from './styles';
+import styles from '../../../src/pages/user/edit/styles'
 import dbConnect from '../../../src/utils/dbConnect';
 import ProductsModel from '../../../src/models/products';
 

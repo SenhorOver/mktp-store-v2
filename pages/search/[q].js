@@ -8,7 +8,7 @@ import dbConnect from "../../src/utils/dbConnect"
 import ProductsModel from "../../src/models/products"
 import { formatCurrency } from "../../src/utils/currency"
 import SearchBar from '../../src/components/SearchBar'
-import styles from './styles'
+import styles from '../../src/pages/search/styles'
 
 const List = ({ products, searchString }) => {
     return (

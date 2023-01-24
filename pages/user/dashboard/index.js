@@ -21,7 +21,7 @@ import ProductsModel from '../../../src/models/products'
 import dbConnect from '../../../src/utils/dbConnect'
 import { formatCurrency } from '../../../src/utils/currency'
 import useToasty from '../../../src/contexts/Toasty'
-import styles from './styles';
+import styles from '../../../src/pages/user/dashboard/styles'
 import slugify from 'slugify';
 
 const Home = ({ products }) => {

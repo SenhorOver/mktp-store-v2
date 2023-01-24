@@ -1,4 +1,4 @@
-import theme from "../../../src/theme"
+import theme from "../../../theme"
 
 const styles = {
   box: { backgroundColor: theme.palette.background.white, padding: theme.spacing(3), marginBottom: theme.spacing(3) },

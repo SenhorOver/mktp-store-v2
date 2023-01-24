@@ -16,13 +16,13 @@ import {
 	CircularProgress
 } from '@mui/material'
 import { Formik } from 'formik';
-import axios from 'axios';
+import axios from '../../../src/utils/axios'
 
 import TemplateDefault from '../../../src/templates/Default'
-import { initialValues, validateSchema } from './formValues';
+import { initialValues, validateSchema } from '../../../src/pages/user/publish/formValues'
 import FileUpload from '../../../src/components/fileUpload';
 import useToasty from '../../../src/contexts/Toasty'
-import styles from './styles';
+import styles from '../../../src/pages/user/publish/styles'
 
 
 const Publish = ({ userId, image, states }) => {

@@ -1,4 +1,4 @@
-import theme from "../../../src/theme"
+import theme from "../../../theme"
 
 const styles = {
   box: {
@@ -9,7 +9,7 @@ const styles = {
   iptCep: { left: '-14px', fontWeight: '400', color: theme.palette.primary.main},
   helperText: { marginLeft: 0 },
   divSpacing: {
-    backgroundColor: theme.palette.background.white,
+    backgroundColor: theme.palette.background.white, 
     padding: theme.spacing(3)
   },
   circularProgress: { display: 'block', margin: '10px auto' },

@@ -16,7 +16,7 @@ import TemplateDefault from "../../../src/templates/Default"
 import { formatCurrency } from "../../../src/utils/currency"
 import dbConnect from "../../../src/utils/dbConnect"
 import { formatDate } from "../../../src/utils/date"
-import styles from "./styles"
+import styles from "../../../src/pages/category/productName/styles"
 
 const Product = ({ product }) => {
     return (
