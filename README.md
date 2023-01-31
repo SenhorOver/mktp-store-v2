@@ -1,34 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Projeto MKTP Store
 
-First, run the development server:
+O Projeto MKTP Store é um website criado utilizando Next js que gerencia tanto o frontent quanto o backend
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack utilizada
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+**Front-end:** React, Next js, MUI 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+**Back-end:** Next js, Next-auth, MongoDB (mongoose), 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+## Obs:
 
-To learn more about Next.js, take a look at the following resources:
+Não fiz o deploy do projeto pois estava com problemas de Timeout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Páginas
 
-## Deploy on Vercel
+- Página Inicial ![App Screenshot](https://github.com/SenhorOver/mktp-store-v2/blob/photos/public/images/pages/Home%20Page.png?raw=true)
+> Tela principal que exibe 6 anúncios que estão na base de dados, com uma barra de pesquisa funcional que busca o texto digitado em títulos e descrição de anúncios
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Página de Busca ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+
+
