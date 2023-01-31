@@ -17,6 +17,11 @@ const post = async (req, res) => {
 
   await dbConnect()
 
+  const userExist = await UsersModel.find({ email })
+  if(userExist.length !== 0){
+    return res.status(403).json({ success: false })
+  }
+
   const passwordHash = await crypto(password)
 
   const user = new UsersModel({

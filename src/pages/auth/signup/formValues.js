@@ -10,6 +10,7 @@ const initialValues = {
 
 const validationSchema = yup.object().shape({
     name: yup.string()
+        .max(21, 'Nome de perfil muito extenso')
         .required('Campo Obrigatório'),
 
     email: yup.string()

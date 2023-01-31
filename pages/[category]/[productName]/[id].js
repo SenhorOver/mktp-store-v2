@@ -157,7 +157,7 @@ export async function getServerSideProps({ query }){
     const { id } = query
     await dbConnect()
     
-    const product = await ProductsModel.findOne({ _id: id })
+    const product = await ProductsModel.findById(id)
 
     return {
         props: {

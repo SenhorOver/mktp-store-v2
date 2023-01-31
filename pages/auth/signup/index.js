@@ -24,16 +24,24 @@ const Signup = () => {
 	const router = useRouter()
 	
 	const handleFormSubmit = async (values) => {
-		const response = await axios.post('/api/users', values)
-
-		if(response.data.success){
+		try{
+			const response = await axios.post('/api/users', values)
+	
+			if(response.data.success){
+				setToasty({
+					open: true,
+					severity: 'success',
+					text: 'Cadastro Realizado com Sucesso, espere um momento e faça login'
+				})
+	
+				router.push('/auth/signin')
+			}
+		} catch(e){
 			setToasty({
 				open: true,
-				severity: 'success',
-				text: 'Cadastro Realizado com Sucesso'
+				severity: 'error',
+				text: 'Erro ao cadastrar usuário - Email já existente'
 			})
-
-			router.push('/auth/signin')
 		}
 	}
 
@@ -146,6 +154,6 @@ const Signup = () => {
 	)
 }
 
-// Signup.requireGuest = true
+Signup.requireGuest = true
 
 export default Signup

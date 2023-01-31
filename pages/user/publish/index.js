@@ -493,7 +493,7 @@ export async function getServerSideProps({ req }){
 	return {
 		props: {
 			userId,
-			image: user.image,
+			image: user.image ? user.image : null,
 			states: states.data
 		}
 	}
